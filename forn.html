@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Belati - HIMTIF</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    body { 
+      background: #0a0a0a; 
+      color: white; 
+    }
+    .gold-glow { 
+      text-shadow: 0 0 25px #facc15; 
+    }
+    .card { 
+      background: #1f2937; 
+      transition: all 0.4s ease; 
+    }
+    .card:hover { 
+      transform: translateY(-8px); 
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.4); 
+    }
+    .selected {
+      border-color: #facc15;
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
+      background: #374151;
+    }
+    .btn-gold {
+      background: linear-gradient(90deg, #eab308, #facc15);
+      color: #111827;
+      font-weight: 700;
+    }
+    .progress-bar {
+      background: linear-gradient(to right, #facc15, #eab308);
+    }
+
+    /* Error Styling */
+    .error-input {
+      border-color: #ef4444 !important;
+      background-color: #450a0a !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Custom Popup */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .popup-card {
+      background: #1f2937;
+      border-radius: 24px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 0 50px rgba(250, 204, 21, 0.6);
+      animation: popupPop 0.3s ease;
+    }
+    @keyframes popupPop {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen py-10">
+
+  <div class="max-w-2xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <div class="flex justify-center mb-6">
+        <img src="logo himtif.png" alt="Logo HIMTIF" class="w-28 h-28 object-contain drop-shadow-xl">
+      </div>
+      <h1 class="text-5xl font-black tracking-tighter gold-glow">BELATI</h1>
+      <p class="text-yellow-300 text-2xl mt-1">Belajar Teknik Informatika</p>
+      <p class="text-blue-400">HIMPUNAN MAHASISWA TEKNIK INFORMATIKA • UNIVERSITAS RAHARJA</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mb-10">
+      <div class="flex justify-between text-xs uppercase tracking-widest text-gray-400 mb-2 px-1">
+        <div id="step1" class="font-medium text-yellow-300">1. DATA DIRI</div>
+        <div id="step2" class="font-medium">2. PILIH LEVEL</div>
+        <div id="step3" class="font-medium">3. ALASAN</div>
+        <div id="step4" class="font-medium">4. KONFIRMASI</div>
+      </div>
+      <div class="h-3 bg-gray-800 rounded-full overflow-hidden">
+        <div id="progress" class="progress-bar h-full w-1/4 rounded-full transition-all duration-500"></div>
+      </div>
+    </div>
+
+    <form id="belatiForm" class="space-y-10">
+      <!-- Step 1 -->
+      <div id="stepContent1" class="step-content">
+        <h2 class="text-3xl font-bold mb-8 text-center">Data Diri Kamu</h2>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-gray-300 mb-2 font-medium">Nama Lengkap <span class="text-xs text-gray-500">(maks. 60 karakter)</span></label>
+            <input type="text" id="nama" maxlength="60" required 
+                   placeholder="Masukkan nama lengkap kamu"
+                   class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-2xl px-6 py-5 text-lg">
+          </div>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block text-gray-300 mb-2 font-medium">NIM <span class="text-xs text-gray-500">(10 digit angka)</span></label>
+              <input type="text" id="nim" maxlength="10" required 
+                     placeholder="Contoh: 2024123456"
+                     class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-2xl px-6 py-5 text-lg">
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-2 font-medium">WhatsApp <span class="text-xs text-gray-500">(maks. 13 digit)</span></label>
+              <input type="tel" id="wa" maxlength="13" required 
+                     placeholder="Contoh: 081234567890"
+                     class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-2xl px-6 py-5 text-lg">
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-2 font-medium">Email <span class="text-xs text-gray-500">(@raharja.info)</span></label>
+            <input type="email" id="email" required 
+                   placeholder="Contoh: nama.nim@raharja.info"
+                   class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-2xl px-6 py-5 text-lg">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Pilih Level dengan Placeholder Baru -->
+      <div id="stepContent2" class="step-content hidden">
+        <h2 class="text-3xl font-bold mb-8 text-center">Pilih Level yang Ingin Diikuti</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="levelCards"></div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="stepContent3" class="step-content hidden">
+        <h2 class="text-3xl font-bold mb-6 text-center">Alasan & Harapan</h2>
+        <textarea id="alasan" rows="7" 
+                  placeholder="Tulis alasan kamu mengikuti Belati dan harapan kamu setelah mengikuti program ini..."
+                  class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-3xl px-6 py-5 text-lg resize-none"></textarea>
+      </div>
+
+      <!-- Step 4 -->
+      <div id="stepContent4" class="step-content hidden">
+        <h2 class="text-3xl font-bold mb-8 text-center">Konfirmasi Pendaftaran</h2>
+        <div id="reviewData" class="bg-gray-900 border border-gray-700 rounded-3xl p-8 space-y-6 text-lg"></div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex justify-between pt-8">
+        <button type="button" id="prevBtn" onclick="prevStep()" 
+                class="px-10 py-4 text-gray-400 hover:text-white font-semibold hidden">← Kembali</button>
+        
+        <button type="button" id="nextBtn" onclick="nextStep()" 
+                class="ml-auto px-12 py-4 btn-gold rounded-2xl text-xl shadow-lg hover:shadow-yellow-400/50">
+          Lanjut →
+        </button>
+        
+        <button type="submit" id="submitBtn" 
+                class="ml-auto px-14 py-4 bg-green-600 hover:bg-green-500 rounded-2xl text-xl font-bold hidden">
+          Kirim Pendaftaran
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Custom Error Popup -->
+  <div id="customPopup" class="popup-overlay">
+    <div class="popup-card p-8 text-center">
+      <div id="popupIcon" class="mb-5 text-6xl">⚠️</div>
+      <h3 id="popupTitle" class="text-2xl font-bold mb-3 text-yellow-300">Peringatan</h3>
+      <p id="popupMessage" class="text-gray-300 mb-8 text-lg"></p>
+      <button onclick="closePopup()" 
+              class="px-10 py-4 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold rounded-2xl text-lg w-full">
+        OK
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Popup -->
+  <div id="successPopup" class="popup-overlay">
+    <div class="popup-card p-10 text-center">
+      <div class="mb-6">
+        <i class="fas fa-check-circle text-green-500 text-7xl"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-green-400 mb-3">Pendaftaran Berhasil!</h2>
+      <p class="text-gray-300 mb-8 text-lg">
+        Terima kasih telah bergabung dengan Belati HIMTIF.<br>
+        Kami akan menghubungi kamu melalui WhatsApp secepatnya.
+      </p>
+      <button onclick="closeSuccessPopup()" 
+              class="px-10 py-4 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold rounded-2xl text-lg w-full">
+        TUTUP
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    let selectedLevel = null;
+
+    const levels = [
+      { 
+        id: "dasar", 
+        title: "Web Dasar", 
+        desc: "Rekomendasi buat pemula!", 
+        icon: "🌐" 
+      },
+      { 
+        id: "php", 
+        title: "PHP Native", 
+        desc: "belajar website dan database yuk!", 
+        icon: "🐘" 
+      },
+      { 
+        id: "framework", 
+        title: "Framework PHP", 
+        desc: "Framework buat mempermudah development mu!", 
+        icon: "⚡" 
+      }
+    ];
+
+    function clearErrors() {
+      document.querySelectorAll('.error-input').forEach(el => el.classList.remove('error-input'));
+    }
+
+    function markError(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field) field.classList.add('error-input');
+    }
+
+    function addLiveValidation() {
+      const fields = ['nama', 'nim', 'wa', 'email'];
+      fields.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+          input.addEventListener('input', () => {
+            input.classList.remove('error-input');
+          });
+        }
+      });
+    }
+
+    function showPopup(message) {
+      document.getElementById("popupMessage").textContent = message;
+      document.getElementById("customPopup").style.display = "flex";
+    }
+
+    function closePopup() {
+      document.getElementById("customPopup").style.display = "none";
+    }
+
+    function closeSuccessPopup() {
+      document.getElementById("successPopup").style.display = "none";
+    }
+
+    function renderLevelCards() {
+      const container = document.getElementById("levelCards");
+      container.innerHTML = "";
+      levels.forEach(level => {
+        const card = document.createElement("div");
+        card.className = `card p-8 rounded-3xl border-2 text-center cursor-pointer ${selectedLevel === level.id ? 'selected' : 'border-gray-700'}`;
+        card.innerHTML = `
+          <div class="text-6xl mb-5">${level.icon}</div>
+          <h3 class="font-bold text-2xl mb-3">${level.title}</h3>
+          <p class="text-gray-400">${level.desc}</p>
+        `;
+        card.onclick = () => {
+          selectedLevel = level.id;
+          renderLevelCards();
+        };
+        container.appendChild(card);
+      });
+    }
+
+    function updateProgress() {
+      const percent = ((currentStep - 1) / 3) * 100;
+      document.getElementById("progress").style.width = percent + "%";
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`stepContent${step}`).classList.remove('hidden');
+
+      document.getElementById("prevBtn").classList.toggle("hidden", step === 1);
+      document.getElementById("nextBtn").classList.toggle("hidden", step === 4);
+      document.getElementById("submitBtn").classList.toggle("hidden", step !== 4);
+
+      if (step === 2) renderLevelCards();
+      if (step === 4) showReview();
+    }
+
+    function validateCurrentStep() {
+      clearErrors();
+
+      if (currentStep === 1) {
+        const nama = document.getElementById("nama").value.trim();
+        const nim = document.getElementById("nim").value.trim();
+        const wa = document.getElementById("wa").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (!nama) { markError("nama"); return "Nama Lengkap wajib diisi!"; }
+        if (nama.length > 60) { markError("nama"); return "Nama Lengkap maksimal 60 karakter!"; }
+
+        if (!nim) { markError("nim"); return "NIM wajib diisi!"; }
+        if (!/^\d{10}$/.test(nim)) { markError("nim"); return "NIM harus tepat 10 digit angka!"; }
+
+        if (!wa) { markError("wa"); return "Nomor WhatsApp wajib diisi!"; }
+        if (!/^08[0-9]{0,11}$/.test(wa)) { markError("wa"); return "Nomor WhatsApp harus dimulai dengan 08!"; }
+        if (wa.length > 13) { markError("wa"); return "Nomor WhatsApp maksimal 13 digit!"; }
+
+        if (!email) { markError("email"); return "Email wajib diisi!"; }
+        if (!email.endsWith("@raharja.info")) { markError("email"); return 'Email harus menggunakan domain @raharja.info!'; }
+      }
+      else if (currentStep === 2) {
+        if (!selectedLevel) return "Silakan pilih salah satu level terlebih dahulu!";
+      }
+      return null;
+    }
+
+    function nextStep() {
+      const errorMsg = validateCurrentStep();
+      if (errorMsg) {
+        showPopup(errorMsg);
+        return;
+      }
+      if (currentStep < 4) {
+        currentStep++;
+        showStep(currentStep);
+        updateProgress();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        updateProgress();
+      }
+    }
+
+    function showReview() {
+      const nama = document.getElementById("nama").value.trim() || "-";
+      const nim = document.getElementById("nim").value.trim() || "-";
+      const wa = document.getElementById("wa").value.trim() || "-";
+      const email = document.getElementById("email").value.trim() || "-";
+      const alasan = document.getElementById("alasan").value.trim() || "-";
+      const levelTitle = levels.find(l => l.id === selectedLevel)?.title || "-";
+
+      document.getElementById("reviewData").innerHTML = `
+        <div class="space-y-5">
+          <p><span class="text-gray-400">Nama Lengkap</span><br><strong class="text-xl">${nama}</strong></p>
+          <p><span class="text-gray-400">NIM</span><br><strong class="text-xl">${nim}</strong></p>
+          <p><span class="text-gray-400">WhatsApp</span><br><strong class="text-xl">${wa}</strong></p>
+          <p><span class="text-gray-400">Email</span><br><strong class="text-xl">${email}</strong></p>
+          <div class="pt-6 border-t border-gray-700">
+            <p class="text-gray-400">Level Dipilih</p>
+            <p class="text-2xl font-bold text-yellow-300">${levelTitle}</p>
+          </div>
+          <div class="pt-6 border-t border-gray-700">
+            <p class="text-gray-400">Alasan & Harapan</p>
+            <p class="text-gray-300">${alasan}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    document.getElementById("belatiForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const errorMsg = validateCurrentStep();
+      if (errorMsg) {
+        showPopup(errorMsg);
+        return;
+      }
+      if (!selectedLevel) {
+        showPopup("Silakan pilih salah satu level terlebih dahulu!");
+        return;
+      }
+
+      setTimeout(() => {
+        document.getElementById("successPopup").style.display = "flex";
+      }, 400);
+    });
+
+    // Inisialisasi
+    showStep(1);
+    updateProgress();
+    addLiveValidation();
+  </script>
+</body>
+</html>
