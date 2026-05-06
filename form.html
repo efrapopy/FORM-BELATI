@@ -3,26 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- FAVICON BARU -->
+  <link rel="icon" href="logo himtif.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo himtif.png">
   <title>Pendaftaran Belati - HIMTIF</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
-    body { background: #0a0a0a; color: white; }
+    body { 
+      background: #0a0a0a; 
+      color: white; 
+    }
+
+    /* Transisi Masuk dari Index */
+    .page-enter {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .page-enter.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .gold-glow { text-shadow: 0 0 20px #facc15; }
     .btn-gold {
       background: linear-gradient(90deg, #eab308, #facc15);
       color: #111827;
       font-weight: 700;
     }
+
+    /* Progress Step - Diperbaiki untuk Mobile */
     .step-header {
       cursor: pointer;
       transition: all 0.2s ease;
+      font-size: 0.75rem;
+      line-height: 1.25;
+      padding: 4px 2px;
     }
     .step-header.active {
       color: #facc15;
       font-weight: 700;
     }
+
+    @media (min-width: 640px) {
+      .step-header {
+        font-size: 0.875rem;
+      }
+    }
+
     .popup-overlay {
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
@@ -31,30 +61,50 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      padding: 1rem;
     }
+
+    .popup-content {
+      width: 100%;
+      max-width: 340px;
+      background: #1f2937;
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 20px 40px -10px rgb(0 0 0 / 0.6);
+    }
+
     .error-input {
       border-color: #ef4444 !important;
       background-color: #450a0a !important;
     }
-    input, textarea { font-size: 16px !important; }
 
-        /* Hide default radio button */
+    input, textarea { 
+      font-size: 16px !important; 
+    }
+
     input[type="radio"] {
       display: none;
     }
-    
     input[type="radio"] + div {
       transition: all 0.3s ease;
     }
-    
     input[type="radio"]:checked + div {
       border-color: #facc15;
       background-color: #374151;
       transform: scale(1.03);
     }
+
+    /* Responsif Mobile */
+    @media (max-width: 640px) {
+      .max-w-2xl { max-width: 100% !important; }
+      h1 { font-size: 2.5rem !important; }
+      h2 { font-size: 1.75rem !important; }
+      .p-8 { padding: 1.5rem !important; }
+      .popup-content { max-width: 92%; padding: 1.6rem 1.25rem; }
+    }
   </style>
 </head>
-<body class="min-h-screen py-8">
+<body class="min-h-screen py-8 page-enter">
 
   <div class="max-w-2xl mx-auto px-4 md:px-6">
     <div class="text-center mb-8">
@@ -63,12 +113,12 @@
       <p class="text-yellow-300 text-xl">Belajar Teknik Informatika</p>
     </div>
 
-    <!-- Progress -->
+    <!-- Progress Step -->
     <div class="mb-10">
-      <div class="grid grid-cols-3 gap-1 text-center text-sm uppercase tracking-widest text-gray-400">
-        <div onclick="goToStep(1)" id="header1" class="step-header active">1. DATA DIRI</div>
-        <div onclick="goToStep(2)" id="header2" class="step-header">2. PERLENGKAPAN</div>
-        <div onclick="goToStep(3)" id="header3" class="step-header">3. KONFIRMASI</div>
+      <div class="grid grid-cols-3 gap-1 text-center uppercase tracking-widest text-gray-400">
+        <div onclick="goToStep(1)" id="header1" class="step-header active">1. BIODATA</div>
+        <div onclick="goToStep(2)" id="header2" class="step-header">2. DEVICE</div>
+        <div onclick="goToStep(3)" id="header3" class="step-header">3. SUBMIT</div>
       </div>
       <div class="h-2.5 bg-gray-800 rounded-full overflow-hidden mt-2">
         <div id="progress" class="h-full rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 transition-all"></div>
@@ -105,49 +155,42 @@
           <div>
             <label class="block text-gray-300 mb-2">Email (@raharja.info) <span class="text-red-400">*</span></label>
             <input type="email" name="email" id="email" required 
-                   placeholder="nama.nim@raharja.info"
+                   placeholder="gunakan email @raharja.info"
                    class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-2xl px-5 py-4">
           </div>
         </div>
       </div>
 
-           <!-- STEP 2 -->
+      <!-- STEP 2 -->
       <div id="stepContent2" class="step-content hidden">
         <h2 class="text-3xl font-bold mb-6 text-center">Perlengkapan Belajar</h2>
         <div class="p-8 bg-gray-900 rounded-3xl border border-gray-700">
           <label class="block text-lg mb-6 text-center">Apakah kamu memiliki laptop?</label>
           <div class="grid grid-cols-2 gap-4">
-            
-            <!-- Ya -->
             <label class="cursor-pointer">
               <input type="radio" name="laptop" value="ya" checked>
               <div class="border-2 border-gray-700 rounded-3xl p-8 text-center hover:border-yellow-400 transition-all">
                 <div class="text-6xl mb-4">💻</div>
-                <div class="font-semibold text-lg">Ya, Punya Laptop</div>
+                <div class="font-semibold text-lg">Punya </div>
               </div>
             </label>
-            
-            <!-- Tidak -->
             <label class="cursor-pointer">
               <input type="radio" name="laptop" value="tidak">
               <div class="border-2 border-gray-700 rounded-3xl p-8 text-center hover:border-yellow-400 transition-all">
                 <div class="text-6xl mb-4">📱</div>
-                <div class="font-semibold text-lg">Tidak Punya Laptop</div>
+                <div class="font-semibold text-lg">Tidak Punya</div>
               </div>
             </label>
-            
           </div>
         </div>
 
         <div class="mt-8">
-           <h2 class="text-3xl font-bold mb-6 text-center">Alasan &amp; Harapan</h2>
+          <h2 class="text-3xl font-bold mb-6 text-center">Alasan &amp; Harapan</h2>
           <textarea name="alasan" id="alasan" rows="5" 
                     placeholder="Ceritakan alasan dan harapan kamu mengikuti BELATI..."
                     class="w-full bg-gray-900 border border-gray-700 focus:border-yellow-400 rounded-3xl px-5 py-4"></textarea>
         </div>
       </div>
-
-     
 
       <!-- STEP 3 -->
       <div id="stepContent3" class="step-content hidden">
@@ -165,7 +208,7 @@
 
   <!-- Loading Popup -->
   <div id="loadingPopup" class="popup-overlay">
-    <div class="bg-[#1f2937] rounded-3xl p-8 text-center max-w-xs mx-auto">
+    <div class="popup-content text-center">
       <div class="animate-spin w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full mx-auto mb-6"></div>
       <h3 class="text-xl font-bold text-yellow-300 mb-2">Mengirim Data...</h3>
       <p class="text-gray-400">Mohon tunggu sebentar</p>
@@ -174,7 +217,7 @@
 
   <!-- Error Popup -->
   <div id="customPopup" class="popup-overlay">
-    <div class="bg-[#1f2937] rounded-3xl p-8 text-center max-w-xs mx-auto">
+    <div class="popup-content text-center">
       <div class="text-5xl mb-5">⚠️</div>
       <h3 class="text-xl font-bold text-yellow-300 mb-3">Peringatan</h3>
       <p id="popupMessage" class="text-gray-300 mb-8"></p>
@@ -184,7 +227,7 @@
 
   <!-- Success Popup -->
   <div id="successPopup" class="popup-overlay">
-    <div class="bg-[#1f2937] rounded-3xl p-8 text-center max-w-xs mx-auto">
+    <div class="popup-content text-center">
       <i class="fas fa-check-circle text-green-500 text-6xl mb-6"></i>
       <h2 class="text-2xl font-bold text-green-400">Pendaftaran Berhasil!</h2>
       <button onclick="manualCloseSuccess()" class="mt-6 w-full py-4 bg-yellow-400 text-gray-900 font-bold rounded-2xl">
@@ -195,7 +238,7 @@
 
   <script>
     let currentStep = 1;
-    const WEB_APP_URL = "";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwAIxEygZhj9aM9H4sxJsNWE0xeUjADQI3IaP-5WQh6GHzuyY7lo8mIbq2FBD20npoAKA/exec";
 
     function showStep(step) {
       document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
@@ -223,7 +266,6 @@
       });
     }
 
-    // Auto remove red border when user types (Real-time behavior)
     function setupRealTimeValidation() {
       const fields = ['nama', 'nim', 'wa', 'email'];
       fields.forEach(id => {
@@ -248,12 +290,17 @@
       if (!wa.startsWith("08") || wa.length < 10 || wa.length > 13) { document.getElementById("wa").classList.add('error-input'); return "Nomor WhatsApp harus valid!"; }
       if (!email.endsWith("@raharja.info")) { document.getElementById("email").classList.add('error-input'); return "Email harus menggunakan @raharja.info!"; }
 
+      if (email.length > 0 && email[0] !== email[0].toLowerCase()) {
+        document.getElementById("email").classList.add('error-input');
+        return "Huruf pertama email harus huruf kecil!";
+      }
+
       return null;
     }
 
     function showReview() {
       const laptopText = document.querySelector('input[name="laptop"]:checked').value === "ya" ? 
-                        "Ya, Punya Laptop" : "Tidak Punya Laptop";
+                        "Punya Laptop" : "Tidak Punya Laptop";
 
       document.getElementById("reviewData").innerHTML = `
         <div class="space-y-5 text-sm">
@@ -287,7 +334,6 @@
       document.getElementById("customPopup").style.display = "none";
     }
 
-    // Submit
     document.getElementById("belatiForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -374,10 +420,38 @@
       updateProgress();
     }
 
+    // ================== ENTER KEY HANDLER BARU (Tidak menyentuh kode lama) ==================
+    function setupEnterKey() {
+      document.getElementById("belatiForm").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+          e.preventDefault(); // cegah submit otomatis
+          
+          if (currentStep === 3) {
+            // Di halaman konfirmasi → submit form
+            const submitBtn = document.getElementById("submitBtn");
+            if (!submitBtn.classList.contains("hidden")) {
+              submitBtn.click();
+            }
+          } else {
+            // Di step 1 atau 2 → pindah ke step berikutnya
+            nextStep();
+          }
+        }
+      });
+    }
+
     // Initialize
-    showStep(1);
-    updateProgress();
-    setupRealTimeValidation();
+    window.onload = function() {
+      showStep(1);
+      updateProgress();
+      setupRealTimeValidation();
+      
+      setTimeout(() => {
+        document.body.classList.add('active');
+      }, 80);
+
+      setupEnterKey();   // ← Kode baru untuk handle Enter
+    };
   </script>
 </body>
 </html>

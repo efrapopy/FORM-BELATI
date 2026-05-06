@@ -3,59 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- FAVICON BARU -->
+  <link rel="icon" href="logo himtif.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo himtif.png">
   <title>Gabung Grup WhatsApp - BELATI HIMTIF</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
     body { 
-      background: #0a0a0a; 
+      background: linear-gradient(135deg, #0a0a0a 0%, #111827 100%);
       color: white; 
+      min-height: 100vh;
     }
+
+    .page-enter {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .page-enter.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .wa-logo {
-      filter: drop-shadow(0 0 35px #25D366);
+      filter: drop-shadow(0 0 50px #25D366);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    .wa-logo:hover {
+      transform: scale(1.08) rotate(8deg);
+    }
+
     .wa-green { 
       background: #25D366; 
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .wa-green:hover { 
       background: #128C7E; 
-      transform: translateY(-3px);
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 25px 30px -8px rgb(37 211 102 / 0.5);
     }
+
     .card {
-      background: #111827;
-      border: 1px solid #374151;
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      backdrop-filter: blur(16px);
+      transition: all 0.5s ease;
     }
+    .card:hover {
+      border-color: rgba(234, 179, 8, 0.3);
+      transform: translateY(-4px);
+    }
+
+    /* Responsif Teks */
+    #welcomeText {
+      font-size: 1.75rem;
+      line-height: 1.35;
+      font-weight: 700;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    @media (min-width: 480px) {
+      #welcomeText { font-size: 2.1rem; }
+    }
+    @media (min-width: 640px) {
+      #welcomeText { font-size: 2.45rem; }
+    }
+
+    .animate-pop {
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.7) translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .stagger-1 { animation-delay: 100ms; }
+    .stagger-2 { animation-delay: 250ms; }
+    .stagger-3 { animation-delay: 400ms; }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-5">
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 page-enter">
 
   <div class="max-w-md w-full text-center">
-    <div class="mb-8">
-      <i class="fab fa-whatsapp text-[92px] md:text-[110px] text-[#25D366] wa-logo"></i>
+    
+    <div class="mb-8 animate-pop stagger-1">
+      <i class="fab fa-whatsapp text-[88px] sm:text-[110px] md:text-[120px] text-[#25D366] wa-logo"></i>
     </div>
 
-    <h1 id="welcomeText" class="text-3xl md:text-4xl font-bold mb-10 leading-tight"></h1>
+    <h1 id="welcomeText" class="font-bold mb-10 leading-tight animate-pop stagger-2"></h1>
 
-    <div class="card rounded-3xl p-7 mb-10 text-left">
-      <p class="text-gray-300 mb-5 text-[15.5px]">Selamat bergabung di BELATI!</p>
-      <p class="text-gray-300 text-[15.5px]">Klik tombol di bawah ini untuk bergabung ke grup WhatsApp resmi BELATI HIMTIF.</p>
+    <div class="card rounded-3xl p-6 sm:p-8 mb-10 text-left animate-pop stagger-3">
+      <p class="text-gray-300 mb-4 text-[15.5px] leading-relaxed">
+        Selamat bergabung di BELATI!<br>Pembelajaran dilakukan setiap hari Sabtu<br>Pukul 10.00 - 14.00 WIB<br>Diruang LV-303
+      </p>
+   
+      <p class="text-gray-300 text-[15.5px] leading-relaxed">
+        Klik tombol di bawah ini untuk bergabung ke grup WhatsApp resmi BELATI HIMTIF.
+      </p>
     </div>
+
 
     <a id="waButton" href="#" target="_blank"
-       class="wa-green text-white font-bold text-lg py-5 px-10 rounded-2xl inline-flex items-center justify-center gap-3 shadow-xl w-full max-w-xs mx-auto mb-12">
+       class="wa-green text-white font-bold text-lg py-5 px-10 rounded-3xl inline-flex items-center justify-center gap-3 shadow-2xl w-full max-w-xs mx-auto mb-12 animate-pop stagger-3 active:scale-95">
       <i class="fab fa-whatsapp text-4xl"></i>
       <span>Gabung Grup WhatsApp</span>
     </a>
 
     <a href="index.html" 
-       class="inline-flex items-center gap-3 px-8 py-4 border-2 border-gray-600 rounded-2xl text-gray-300 hover:text-yellow-300 font-medium">
+       class="inline-flex items-center gap-3 px-8 py-4 border-2 border-gray-600 rounded-3xl text-gray-300 hover:text-yellow-300 hover:border-yellow-300 font-medium transition-all duration-300 active:scale-95">
       <i class="fas fa-arrow-left"></i>
       <span>Kembali ke Beranda</span>
     </a>
 
-    <div class="mt-12 text-gray-400 text-sm">
+    <div class="mt-12 text-gray-400 text-sm space-y-1">
       <p>Link ini hanya berlaku untukmu.</p>
       <p>Jika ada kendala, hubungi panitia melalui WA pribadi.</p>
     </div>
@@ -65,13 +135,14 @@
     const nama = localStorage.getItem("belati_nama") || "Mahasiswa";
 
     document.getElementById("welcomeText").innerHTML = 
-      `Selamat bergabung di BELATI <span class="text-yellow-300">${nama}</span>!`;
+      `Selamat bergabung di BELATI <span class="text-yellow-300">${nama}</span>`;
 
-    // GANTI LINK INI DENGAN LINK GRUP WHATSAPP KAMU
     const groupLink = "https://chat.whatsapp.com/Itcgwjp4x93LVdl4LwGVng";
+    document.getElementById("waButton").href = groupLink;
 
-    const button = document.getElementById("waButton");
-    button.href = groupLink;
+    window.onload = function() {
+      document.body.classList.add('active');
+    };
   </script>
 </body>
 </html>
