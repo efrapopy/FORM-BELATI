@@ -39,8 +39,8 @@
     <h1 id="welcomeText" class="text-3xl md:text-4xl font-bold mb-10 leading-tight"></h1>
 
     <div class="card rounded-3xl p-7 mb-10 text-left">
-      <p class="text-gray-300 mb-5 text-[15.5px]">Yuk gabung ke grup WhatsApp sesuai level yang kamu pilih.</p>
-      <p class="text-gray-300 text-[15.5px]">Di grup ini kamu akan mendapatkan materi, pengumuman, dan diskusi bareng teman-teman.</p>
+      <p class="text-gray-300 mb-5 text-[15.5px]">Selamat bergabung di BELATI!</p>
+      <p class="text-gray-300 text-[15.5px]">Klik tombol di bawah ini untuk bergabung ke grup WhatsApp resmi BELATI HIMTIF.</p>
     </div>
 
     <a id="waButton" href="#" target="_blank"
@@ -62,26 +62,16 @@
   </div>
 
   <script>
-    const nama = localStorage.getItem("belati_nama") || "Sahabat BELATI";
-    const levelId = localStorage.getItem("belati_level");
+    const nama = localStorage.getItem("belati_nama") || "Mahasiswa";
 
     document.getElementById("welcomeText").innerHTML = 
       `Selamat bergabung di BELATI <span class="text-yellow-300">${nama}</span>!`;
 
-    const groupLinks = {
-      "dasar": "https://chat.whatsapp.com/XXXXXXXXXXXXXXXXXXXX",
-      "php": "https://chat.whatsapp.com/XXXXXXXXXXXXXXXXXXXX",
-      "framework": "https://chat.whatsapp.com/XXXXXXXXXXXXXXXXXXXX"
-    };
+    // GANTI LINK INI DENGAN LINK GRUP WHATSAPP KAMU
+    const groupLink = "https://chat.whatsapp.com/Itcgwjp4x93LVdl4LwGVng";
 
     const button = document.getElementById("waButton");
-    if (levelId && groupLinks[levelId]) {
-      button.href = groupLinks[levelId];
-    } else {
-      button.href = "#";
-      button.innerHTML = `<i class="fab fa-whatsapp text-4xl"></i><span>Hubungi Panitia</span>`;
-      button.style.backgroundColor = "#ef4444";
-    }
+    button.href = groupLink;
   </script>
 </body>
 </html>
