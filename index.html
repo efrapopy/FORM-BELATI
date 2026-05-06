@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Belati - HIMTIF Universitas Raharja</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1f2937 100%);
+      min-height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 1.5rem 1rem;
+    }
+    .glow-text {
+      text-shadow: 0 0 20px #facc15, 0 0 40px #eab308;
+    }
+    .logo-img {
+      filter: drop-shadow(0 10px 25px rgba(250, 204, 21, 0.5));
+      transition: transform 0.4s ease;
+    }
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+    .particle {
+      position: absolute;
+      background: rgba(250, 204, 21, 0.35);
+      border-radius: 50%;
+      animation: particleFloat 35s linear infinite;
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      100% { transform: translateY(-150vh) scale(0.3); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div id="particles" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <div class="text-center z-10 max-w-md lg:max-w-lg mx-auto px-4">
+
+      <!-- Logo -->
+      <div class="flex justify-center mb-6">
+        <img src="logo himtif.png" alt="Logo HIMTIF Universitas Raharja" 
+             class="logo-img w-24 h-24 md:w-32 lg:w-36 object-contain">
+      </div>
+
+      <!-- Judul BELATI -->
+      <h1 class="text-[2.7rem] sm:text-[3.1rem] md:text-[4rem] lg:text-[4.6rem] font-black tracking-[-2px] glow-text leading-none mb-3">
+        BELATI
+      </h1>
+
+      <p class="text-xl sm:text-2xl md:text-2xl lg:text-3xl text-yellow-100 font-light tracking-wide mb-4">
+        BELAJAR TEKNIK INFORMATIKA
+      </p>
+      
+      <p class="text-blue-200 text-lg md:text-xl font-semibold tracking-wider mb-1">
+        HIMPUNAN MAHASISWA<br>TEKNIK INFORMATIKA
+      </p> 
+      <p class="text-slate-400 text-lg md:text-xl mb-12">
+        UNIVERSITAS RAHARJA
+      </p>
+
+      <!-- Tombol Daftar -->
+      <a href="form.html" 
+         class="inline-flex items-center gap-3 bg-gradient-to-r from-amber-400 to-yellow-300 text-gray-900 font-bold text-lg md:text-xl px-14 md:px-20 py-6 rounded-3xl shadow-xl hover:scale-105 transition-all">
+        DAFTAR SEKARANG
+        <i class="fas fa-arrow-right text-2xl"></i>
+      </a>
+
+      <!-- Keterangan Bawah - Tanpa Scrollbar -->
+      <div class="mt-16 text-yellow-100/70 text-xs md:text-sm tracking-[1.5px] font-medium px-4">
+        <p class="whitespace-nowrap overflow-hidden text-ellipsis">
+        WEB DASAR • PHP NATIVE • FRAMEWORK PHP
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 45; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.animationDuration = `${Math.random() * 30 + 25}s`;
+        particle.style.animationDelay = `-${Math.random() * 40}s`;
+        container.appendChild(particle);
+      }
+    }
+    window.onload = createParticles;
+  </script>
+</body>
+</html>
